@@ -208,7 +208,7 @@ async function getPath(basePath: string, source: string, params: { [key: string]
 }
 
 async function generateJuliaPlot(params : {[key:string]:string }, outputPath: string, settings: JuliaPlotsSettings){
-    const juliaScriptPath = path.join(this.app.vault.adapter.getBasePath(), '.obsidian', 'plugins', 'juliaplots','src','juliaplots.jl');
+    const juliaScriptPath = path.join(this.app.vault.adapter.getBasePath(), '.obsidian', 'plugins', 'juliaplots','juliaplots.jl');
 
     const func = params['function'] ?? settings.default_function;
     const xmin = params['xmin'] ?? settings.default_xmin;

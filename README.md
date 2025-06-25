@@ -23,7 +23,7 @@
 
 1. Install [Julia](https://julialang.org/) into your system, and install the [Plots](https://docs.juliaplots.org/stable/) package on it.
 
-2. Download `main.js`, `juliaplots.jl` and `manifest.json` from the [latest release]().
+2. Download `main.js`, `juliaplots.jl` and `manifest.json` from the [latest release](https://github.com/ivnmansi/juliaplots/releases).
 
 3. Place those files in your Obsidian plugins folder:
 
