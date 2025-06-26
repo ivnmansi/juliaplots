@@ -1,7 +1,7 @@
 <center>
   <h1>JuliaPlots</h1>
 
-  <img src="https://img.shields.io/badge/release-v0.1-blue"> <img src="https://img.shields.io/badge/Obsidian-483699?style=flat&logo=Obsidian&logoColor=white"> <img src="https://img.shields.io/badge/Julia-9558B2?style=flat&logo=julia&logoColor=white">
+  <img src="https://img.shields.io/badge/release-v0.2-blue"> <img src="https://img.shields.io/badge/Obsidian-483699?style=flat&logo=Obsidian&logoColor=white"> <img src="https://img.shields.io/badge/Julia-9558B2?style=flat&logo=julia&logoColor=white">
   <p>Generate Julia plots function graphs in Obsidian easily!</p>
 
 </center>
@@ -10,8 +10,9 @@
 
 ## 🌟 Features
 - Easily generate function plots **directly in Obsidian** using Julia, without having to use the language sintax
-- Fast and straightforward setup
-- Customizable default parameters
+- **Straightforward** setup
+- Customizable **default parameters**
+- **Graph customization** (Graph title and line color and width)
 
 
 ## 📋 Demo
@@ -37,20 +38,28 @@
    <pre>
    ```juliaplots
    function=cos(x)+1
+   title=my graph
    xmin=-10
    xmax=25
    num_points=100
+   color=rgb(0,255,0)
+   line_width=2
    ```
    </pre>
 
    - `function`: Function wanted to plot
+   - `title`: Title of the graph. Latex sintax is allowed (for example `$\cos x$`)
    - `xmin`: Start of the x range that will be plotted
    - `xmax`: End of the x range that will be plotted
    - `num_points`: Number of points of the function that will be plotted on the range (*warning: a small number will result in a non-smooth graph*)
+   - `color`: Color of the line of the graph. It can be specified in rgb, hex, or in natural language *(blue, red)*
+   - `line_width`: Width of the line of the graph
 
-## ❗ Known issues and posible future features
-- 🕒 **Long waiting time:** The plugin takes approximately 10 seconds to generate and insert a graph.
-- 📈 **Graph customization:** Graphs cannot have custom titles and other graph customizations that Julia plots allow. **
+   > ☑️ If any of these parameters is omitted, the configured default value will be used! You can change them on the plugin's settings tab
+
+## ❗ Known issues
+- 🕒 **Long waiting time:** The plugin can take a long time on generating the graph depending of the user. Still investigating this and if it can be mitigated
+- ❓ **X and Y labels not showing up:** X and Y labels are cut from the image. It can be solved by increasing the margins, but when doing this the image is corrupted for some reason
 
 
 ## 🤝 Contributing
