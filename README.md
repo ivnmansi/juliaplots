@@ -37,7 +37,7 @@
 ## ⚡ Usage
    <pre>
    ```juliaplots
-   function=x^2
+   f(x)=x^2
    title=my graph
    x_label=time (s)
    y_label=velocity (m/s)
