@@ -37,10 +37,10 @@
 ## ⚡ Usage
    <pre>
    ```juliaplots
-   f(x)=x^2
+   function=x^2
    title=my graph
-   xlabel=time (s)
-   ylabel=velocity (m/s)
+   x_label=time (s)
+   y_label=velocity (m/s)
    xmin=-10
    xmax=25
    num_points=100
@@ -52,8 +52,8 @@
 
    - `f(x)`: Function wanted to plot. It has to be in terms of x and in Julia math sintax
    - `title`: Title of the graph. Latex sintax is allowed (for example `$\cos x$`)
-   - `xlabel`: Label of the x-axis
-   - `ylabel`: Label of the y-axis
+   - `x_label`: Label of the x-axis
+   - `y_label`: Label of the y-axis
    - `xmin`: Start of the x range that will be plotted
    - `xmax`: End of the x range that will be plotted
    - `num_points`: Number of points of the function that will be plotted on the range (*warning: a small number will result in a non-smooth graph*)
