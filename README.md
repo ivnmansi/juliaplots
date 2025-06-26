@@ -1,7 +1,7 @@
 <center>
   <h1>JuliaPlots</h1>
 
-  <img src="https://img.shields.io/badge/release-v0.2-blue"> <img src="https://img.shields.io/badge/Obsidian-483699?style=flat&logo=Obsidian&logoColor=white"> <img src="https://img.shields.io/badge/Julia-9558B2?style=flat&logo=julia&logoColor=white">
+  <img src="https://img.shields.io/badge/release-v0.3-blue"> <img src="https://img.shields.io/badge/Obsidian-483699?style=flat&logo=Obsidian&logoColor=white"> <img src="https://img.shields.io/badge/Julia-9558B2?style=flat&logo=julia&logoColor=white">
   <p>Generate Julia plots function graphs in Obsidian easily!</p>
 
 </center>
