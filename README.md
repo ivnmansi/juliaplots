@@ -37,8 +37,10 @@
 ## ⚡ Usage
    <pre>
    ```juliaplots
-   function=cos(x)+1
+   function=x^2
    title=my graph
+   x_label=time (s)
+   y_label=velocity (m/s)
    xmin=-10
    xmax=25
    num_points=100
@@ -49,6 +51,8 @@
 
    - `function`: Function wanted to plot
    - `title`: Title of the graph. Latex sintax is allowed (for example `$\cos x$`)
+   - `x_label`: Label of the x-axis
+   - `y_label`: Label of the y-axis
    - `xmin`: Start of the x range that will be plotted
    - `xmax`: End of the x range that will be plotted
    - `num_points`: Number of points of the function that will be plotted on the range (*warning: a small number will result in a non-smooth graph*)
@@ -59,7 +63,6 @@
 
 ## ❗ Known issues
 - 🕒 **Long waiting time:** The plugin can take a long time on generating the graph depending of the user. Still investigating this and if it can be mitigated
-- ❓ **X and Y labels not showing up:** X and Y labels are cut from the image. It can be solved by increasing the margins, but when doing this the image is corrupted for some reason
 
 
 ## 🤝 Contributing
