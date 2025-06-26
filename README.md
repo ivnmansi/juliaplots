@@ -9,10 +9,10 @@
 
 
 ## 🌟 Features
-- Easily generate function plots **directly in Obsidian** using Julia, without having to use the language sintax
-- **Straightforward** setup
+- Easily generate function plots **directly in Obsidian** using Julia, without having to code
+- **Straightforward** and fast sintax
 - Customizable **default parameters**
-- **Graph customization** (Graph title and line color and width)
+- **Graph customization** (Graph title, line color and width, dark mode)
 
 
 ## 📋 Demo
@@ -37,29 +37,34 @@
 ## ⚡ Usage
    <pre>
    ```juliaplots
-   function=cos(x)+1
+   f(x)=x^2
    title=my graph
+   xlabel=time (s)
+   ylabel=velocity (m/s)
    xmin=-10
    xmax=25
    num_points=100
    color=rgb(0,255,0)
    line_width=2
+   dark_mode=false
    ```
    </pre>
 
-   - `function`: Function wanted to plot
+   - `f(x)`: Function wanted to plot. It has to be in terms of x and in Julia math sintax
    - `title`: Title of the graph. Latex sintax is allowed (for example `$\cos x$`)
+   - `xlabel`: Label of the x-axis
+   - `ylabel`: Label of the y-axis
    - `xmin`: Start of the x range that will be plotted
    - `xmax`: End of the x range that will be plotted
    - `num_points`: Number of points of the function that will be plotted on the range (*warning: a small number will result in a non-smooth graph*)
    - `color`: Color of the line of the graph. It can be specified in rgb, hex, or in natural language *(blue, red)*
    - `line_width`: Width of the line of the graph
+   - `dark_mode`: Allows to render the graphic with a suitable view for vaults with dark themes
 
    > ☑️ If any of these parameters is omitted, the configured default value will be used! You can change them on the plugin's settings tab
 
 ## ❗ Known issues
-- 🕒 **Long waiting time:** The plugin can take a long time on generating the graph depending of the user. Still investigating this and if it can be mitigated
-- ❓ **X and Y labels not showing up:** X and Y labels are cut from the image. It can be solved by increasing the margins, but when doing this the image is corrupted for some reason
+- 🕒 **Long waiting time:** The plugin can take a long time on generating the graph depending of the user. If you have this problem, it's recommended to use a lower amount of plot points
 
 
 ## 🤝 Contributing

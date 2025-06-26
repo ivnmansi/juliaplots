@@ -13,6 +13,7 @@ interface JuliaPlotsSettings {
 	default_x_label: string;
 	default_y_label: string;
 
+	dark_mode: boolean;
 	color: string;
 	line_width: number;
 }
@@ -26,6 +27,7 @@ const DEFAULT_SETTINGS: JuliaPlotsSettings = {
 	default_x_label: 'x',
  	default_y_label: 'y',
 
+	dark_mode: false,
 	color: '#1E90FF',
 	line_width: 2
 }
@@ -173,6 +175,16 @@ class JuliaPlotsSettingTab extends PluginSettingTab {
 	  	containerEl.createEl('h4', { text: '🎨 Graph appearance' });
 
 		new Setting(containerEl)
+			.setName('Dark mode')
+			.setDesc('If enabled, the graph will generate with a transparent background and white text and lines')
+			.addToggle(toggle => toggle
+				.setValue(this.plugin.settings.dark_mode)
+				.onChange(async (value) => {
+					this.plugin.settings.dark_mode = value;
+					await this.plugin.saveSettings();
+				}));
+
+		new Setting(containerEl)
 			.setName('Graph color')
 			.setDesc('Color for the graph line')
 			.addColorPicker(color => color
@@ -230,7 +242,7 @@ async function getPath(source: string, params: { [key: string]: string }, settin
         await this.app.vault.createFolder(dir);
     }
 
-    const func = (params['function'] ?? settings.default_function).toString();
+    const func = (params['f(x)'] ?? settings.default_function).toString();
     const xmin = (params['xmin'] ?? settings.default_xmin).toString();
     const xmax = (params['xmax'] ?? settings.default_xmax).toString();
     const numPoints = (params['num_points'] ?? settings.default_num_points).toString();
@@ -252,7 +264,7 @@ async function generateJuliaPlot(params : {[key:string]:string }, outputPath: st
     const juliaScriptPath = path.join(this.app.vault.adapter.getBasePath(), '.obsidian', 'plugins', 'juliaplots','juliaplots.jl');
 
 	// Recieve the parameters or use default settings
-    const func = params['function'] ?? settings.default_function;
+    const func = params['f(x)'] ?? settings.default_function;
     const xmin = params['xmin'] ?? settings.default_xmin;
     const xmax = params['xmax'] ?? settings.default_xmax;
     const numPoints = params['num_points'] ?? settings.default_num_points;
@@ -260,7 +272,8 @@ async function generateJuliaPlot(params : {[key:string]:string }, outputPath: st
  	const y_label = params['y_label'] ?? settings.default_y_label;
 	const color = params['color'] ?? settings.color;
 	const line_width = params['line_width'] ?? settings.line_width;
-	const title = params['title'];
+	const dark_mode = (params['dark_mode'] ?? settings.dark_mode).toString();
+	const title = params['title'] ?? undefined;
 
 	// Validate required parameters
     if(func === undefined || xmin === undefined || xmax === undefined || numPoints === undefined || !color === undefined || !line_width === undefined){
@@ -278,7 +291,8 @@ async function generateJuliaPlot(params : {[key:string]:string }, outputPath: st
 		String(line_width),
 		outputPath,
 		x_label,
-		y_label
+		y_label,
+		String(dark_mode)
 		
 	];
 	if (title){

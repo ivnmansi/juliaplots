@@ -1,9 +1,9 @@
 {
 	"id": "julia-plots",
 	"name": "Julia Plots",
-	"version": "v0.2",
+	"version": "v0.3",
 	"minAppVersion": "0.15.0",
-	"description": "Generates a Julia plot function graph inside Obsidian",
+	"description": "Generate a Julia plot function graph inside Obsidian",
 	"author": "Iván Mansilla",
 	"authorUrl": "https://github.com/ivnmansi",
 	"fundingUrl": "",
