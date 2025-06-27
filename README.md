@@ -50,7 +50,7 @@
 | `color=<color>`| **Color** that the **functions** on the graph will use if not specified |
 | `scatter_color=<color>`| **Color** that the **points** on the graph will use if not specified |
 | `line_width=<number>`| Width of the function lines |
-| `dark_mode` | Renders the graph with a suitable view for vaults with dark themes |
+| `dark_mode=<true/false>` | Renders the graph with a suitable view for vaults with dark themes |
 
 > ☑️ If any of these parameters is omitted, the configured default value will be used! You can change them in the plugin's settings tab
 
