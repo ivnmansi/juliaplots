@@ -2,7 +2,7 @@
   <h1>JuliaPlots</h1>
 
   <img src="https://img.shields.io/github/v/release/ivnmansi/juliaplots"> <img src="https://img.shields.io/github/release-date/ivnmansi/juliaplots"> <img src="https://img.shields.io/badge/Obsidian-483699?style=flat&logo=Obsidian&logoColor=white"> <img src="https://img.shields.io/badge/Julia-9558B2?style=flat&logo=julia&logoColor=white"> <a href="https://ko-fi.com/abbonexcore"><img src="https://img.shields.io/badge/Ko--fi-F16061?flat&logo=ko-fi&logoColor=white"></a>
-  <p>Generate Julia plots function graphs in Obsidian easily!</p>
+  <p>Generate Julia function plots in Obsidian easily!</p>
 
 </div>
 
@@ -10,19 +10,20 @@
 
 ## 🌟 Features
 - Easily generate function plots **directly in Obsidian** using Julia, without having to code
-- **Straightforward** and fast sintax
+- **Straightforward** and fast syntax
 - Customizable **default parameters**
-- **Graph customization** (Graph title, line color and width, dark mode)
-
+- **Graph customization** (Colors, line width, title, labels, dark mode)
+- Multiple function support
+- Points rendering
 
 ## 📋 Demo
 
 ![Demo gif](demo/demo.gif)
 
 ## 🖥️ Installation
-> ⚠️ This plugin just works for the **desktop** Obsidian app
+> ⚠️ This plugin only works for the **desktop** Obsidian app
 
-1. Install [Julia](https://julialang.org/) into your system, and install the [Plots](https://docs.juliaplots.org/stable/) package on it.
+1. Install [Julia](https://julialang.org/) on your system, and install the [Plots](https://docs.juliaplots.org/stable/) package in it.
 
 2. Download `main.js`, `juliaplots.jl` and `manifest.json` from the [latest release](https://github.com/ivnmansi/juliaplots/releases).
 
@@ -35,37 +36,51 @@
 4. Reload or restart Obsidian and enable the plugin in Settings → Community plugins.
 
 ## ⚡ Usage
-   <pre>
+
+| Parameter      | Description                                                           |
+|----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| `<name_of_function>(x)=<math_equation>, <color>`| **Function to plot** in terms of `x`. It can have any name, as long as it ends with `(x)`. Color can be omitted. You can add as many as you want. |
+| `scatter=<x>,<y>,<color>,<label> ; <x2>,<y2>...`| **Points to render on the graph**. Multiple points must be separated with a `;`. Color and label can be omitted, but if not, they have to be in the **specified order** |
+| `xmin=<number>`| **Start of the range** on the x-axis that will be plotted |
+| `xmax=<number>`| **End of the range** on the x-axis that will be plotted |
+| `num_points=<number>`| Number of points of the function that will be plotted on the range (*warning: a small number will result in a non-smooth graph*) |
+| `title=<graph_title>`| **Title** that will be displayed at the top of the graph |
+| `x_label=<label>`| **Label** that will be displayed on the **x-axis** |
+| `y_label=<label>`| **Label** that will be displayed on the **y-axis** |
+| `color=<color>`| **Color** that the **functions** on the graph will use if not specified |
+| `scatter_color=<color>`| **Color** that the **points** on the graph will use if not specified |
+| `line_width=<number>`| Width of the function lines |
+| `dark_mode` | Renders the graph with a suitable view for vaults with dark themes |
+
+> ☑️ If any of these parameters is omitted, the configured default value will be used! You can change them in the plugin's settings tab
+
+### Example
+
+<pre>
    ```juliaplots
-   f(x)=x^2
-   title=my graph
-   x_label=time (s)
-   y_label=velocity (m/s)
-   xmin=-10
-   xmax=25
-   num_points=100
-   color=rgb(0,255,0)
-   line_width=2
-   dark_mode=false
-   ```
-   </pre>
+   f(x) = x^2, red
+   myfunction2(x) = cos(x)
+   scatter= 2,1 ; 3,2,red,point1
 
-   - `f(x)`: Function wanted to plot. It has to be in terms of x and in Julia math sintax
-   - `title`: Title of the graph. Latex sintax is allowed (for example `$\cos x$`)
-   - `x_label`: Label of the x-axis
-   - `y_label`: Label of the y-axis
-   - `xmin`: Start of the x range that will be plotted
-   - `xmax`: End of the x range that will be plotted
-   - `num_points`: Number of points of the function that will be plotted on the range (*warning: a small number will result in a non-smooth graph*)
-   - `color`: Color of the line of the graph. It can be specified in rgb, hex, or in natural language *(blue, red)*
-   - `line_width`: Width of the line of the graph
-   - `dark_mode`: Allows to render the graphic with a suitable view for vaults with dark themes
+   xmin = -10
+   xmax = 25
+   num_points = 100
 
-   > ☑️ If any of these parameters is omitted, the configured default value will be used! You can change them on the plugin's settings tab
+   title = my graph
+   x_label = time (s)
+   y_label = velocity (m/s)
+
+   color = rgb(0,255,0)
+   scatter_color = black
+   line_width = 2
+   dark_mode = false
+   ```</pre>
+
+
 
 ## ❗ Known issues
-- 🕒 **Long waiting time:** The plugin can take a long time on generating the graph depending of the user. If you have this problem, it's recommended to use a lower amount of plot points
+- 🕒 **Long waiting time:** The plugin can take a long time to generate the graph depending on the user. If you have this problem, it is recommended to use a lower number of plot points.
 
 
 ## 🤝 Contributing
-Feel free to open an issue or a pull request if you have suggestions, improvements, or bug reports. This plugin is in a very early development stage, every contribution is apreciated.
+Feel free to open an issue or a pull request if you have suggestions, improvements, or bug reports. This plugin is in a very early development stage; every contribution is appreciated.
