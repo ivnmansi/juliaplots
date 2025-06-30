@@ -9,16 +9,17 @@
 
 
 ## 🌟 Features
-- Easily generate function plots **directly in Obsidian** using Julia, without having to code
+- Easily generate graphs of 2D and 3D functions **directly in Obsidian** using Julia
 - **Straightforward** and fast syntax
 - Customizable **default parameters**
 - **Graph customization** (Colors, line width, title, labels, dark mode)
-- Multiple function support
-- Points rendering
+- Multiple functions rendering support
+- 2D Points rendering support
 
 ## 📋 Demo
 
 ![Demo gif](demo/demo.gif)
+![Demo 3D gif](demo/demo3D.gif)
 
 ## 🖥️ Installation
 > ⚠️ This plugin only works for the **desktop** Obsidian app
@@ -40,13 +41,17 @@
 | Parameter      | Description                                                           |
 |----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
 | `<name_of_function>(x)=<math_equation>, <color>`| **Function to plot** in terms of `x`. It can have any name, as long as it ends with `(x)`. Color can be omitted. You can add as many as you want. |
+| `<name_of_function>(x,y)=<math_equation>, <color>`| **3D Function to plot** in terms of `x` and `y`. It can have any name, as long as it ends with `(x,y)`. Color can be omitted. You can add as many as you want. |
 | `scatter=<x>,<y>,<color>,<label> ; <x2>,<y2>...`| **Points to render on the graph**. Multiple points must be separated with a `;`. Color and label can be omitted, but if not, they have to be in the **specified order** |
 | `xmin=<number>`| **Start of the range** on the x-axis that will be plotted |
 | `xmax=<number>`| **End of the range** on the x-axis that will be plotted |
+| `ymin=<number>`| **Start of the range** on the y-axis that will be plotted (for 3D functions) |
+| `ymax=<number>`| **End of the range** on the y-axis that will be plotted (for 3D functions) |
 | `num_points=<number>`| Number of points of the function that will be plotted on the range (*warning: a small number will result in a non-smooth graph*) |
 | `title=<graph_title>`| **Title** that will be displayed at the top of the graph |
 | `x_label=<label>`| **Label** that will be displayed on the **x-axis** |
 | `y_label=<label>`| **Label** that will be displayed on the **y-axis** |
+| `z_label=<label>`| **Label** that will be displayed on the **z-axis** (for 3D functions) |
 | `color=<color>`| **Color** that the **functions** on the graph will use if not specified |
 | `scatter_color=<color>`| **Color** that the **points** on the graph will use if not specified |
 | `line_width=<number>`| Width of the function lines |

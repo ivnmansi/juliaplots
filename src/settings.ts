@@ -3,12 +3,15 @@ import JuliaPlots from './main';
 
 /* ---- Plugin settings ---- */
 export interface JuliaPlotsSettings {
-	function: string;
 	xmin: number;
 	xmax: number;
 	num_points: number;
 	x_label: string;
 	y_label: string;
+
+	ymin: number;
+	ymax: number;
+	z_label: string;
 
 	dark_mode: boolean;
 	color: string;
@@ -18,12 +21,15 @@ export interface JuliaPlotsSettings {
 
 /* ---- Default settings ---- */
 export const DEFAULT_SETTINGS: JuliaPlotsSettings = {
-	function: 'x^2',
 	xmin: -10,
 	xmax: 10,
 	num_points: 100,
 	x_label: 'x',
  	y_label: 'y',
+
+	ymin: -10,
+	ymax: 10,
+	z_label: 'z',
 
 	dark_mode: false,
 	color: '#1E90FF',
@@ -47,18 +53,8 @@ export class JuliaPlotsSettingTab extends PluginSettingTab {
 
 		containerEl.empty();
 
-		containerEl.createEl('h4', { text: '📐 Default parameters' });
+		containerEl.createEl('h3', { text: '📐 Default parameters' });
 
-		new Setting(containerEl)
-			.setName('Default function')
-			.setDesc('Default function to plot when no function is specified')
-			.addText(text => text
-				.setPlaceholder('Example: x^2')
-				.setValue(this.plugin.settings.function)
-				.onChange(async (value) => {
-					this.plugin.settings.function = value;
-					await this.plugin.saveSettings();
-				}));
 
 		new Setting(containerEl)
 			.setName('Default xmin')
@@ -114,8 +110,44 @@ export class JuliaPlotsSettingTab extends PluginSettingTab {
 					this.plugin.settings.y_label = value;
 					await this.plugin.saveSettings();
 				}));
+
+		containerEl.createEl('h5', { text: '🏈 3D Functions' });
+
+		new Setting(containerEl)
+			.setName('Default ymin')
+			.setDesc('Default minimum y value for the 3D plot')
+			.addText(text => text
+				.setPlaceholder('Example:  -10')
+				.setValue(this.plugin.settings.ymin.toString())
+				.onChange(async (value) => {
+					this.plugin.settings.ymin = parseFloat(value);
+					await this.plugin.saveSettings();
+				}));
+
+		new Setting(containerEl)
+			.setName('Default ymax')
+			.setDesc('Default maximum y value for the 3D plot')
+			.addText(text => text
+				.setPlaceholder('Example:  10')
+				.setValue(this.plugin.settings.ymax.toString())
+				.onChange(async (value) => {
+					this.plugin.settings.ymax = parseFloat(value);
+					await this.plugin.saveSettings();
+				}));
+
+		new Setting(containerEl)
+			.setName('Default z label')
+			.setDesc('Default label for the z-axis of the 3D graph')
+			.addText(text => text
+				.setPlaceholder('Example:  Height (m)')
+				.setValue(this.plugin.settings.z_label.toString())
+				.onChange(async (value) => {
+					this.plugin.settings.z_label = value;
+					await this.plugin.saveSettings();
+				}));
+
 		
-	  	containerEl.createEl('h4', { text: '🎨 Graph appearance' });
+	  	containerEl.createEl('h3', { text: '🎨 Graph appearance' });
 
 		new Setting(containerEl)
 			.setName('Dark mode')
@@ -158,6 +190,7 @@ export class JuliaPlotsSettingTab extends PluginSettingTab {
 					await this.plugin.saveSettings();
 				}));
 		
-				containerEl.createEl('h6', { text: '💗 Thanks for using my plugin! Any suggestion, contribution, or bug report will be very apretiated!' });
+		const thanksEl = containerEl.createEl('h6');
+        thanksEl.innerHTML = '💗 Thanks for using my plugin! Any suggestion, contribution, or bug report will be very appreciated! <a href="https://github.com/ivnmansi/juliaplots" target="_blank">GitHub Repository</a>';
 	}
 }

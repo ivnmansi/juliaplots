@@ -1,10 +1,10 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
 import { spawn } from 'child_process';
 import * as path from 'path';
-import * as fs from 'fs/promises';
 import { TFile } from 'obsidian';
 
 import { JuliaPlotsSettings, DEFAULT_SETTINGS, JuliaPlotsSettingTab } from './settings';
+import { JuliaPlotsModal } from './command';
 
 /* ---- Plugin logic ---- */
 export default class JuliaPlots extends Plugin {
@@ -34,13 +34,18 @@ export default class JuliaPlots extends Plugin {
 		});
 
 		// Command (editor callback)
-		// TODO: Create a command that generates a julia plot in the current editor
 		this.addCommand({
-			id: 'julia-plot-generate',
-			name: 'Generate Julia Plot',
+			id: 'juliaplots-insert',
+			name: 'Insert a quick JuliaPlots graph',
 			editorCallback: (editor: Editor, view: MarkdownView) => {
-				console.log(editor.getSelection());
-				editor.replaceSelection('WIP: This command is not implemented yet');
+				new JuliaPlotsModal(this.app,async (params) => {
+					const lines = ['```juliaplots'];
+					if (params.function) lines.push(`${params.function}`);
+					if (params.scatter) lines.push(`scatter=${params.scatter}`);
+					if (params.title) lines.push(`title=${params.title}`);
+					lines.push('```');
+					editor.replaceSelection(lines.join('\n'));
+				}).open();
 			}
 		});
 
@@ -96,17 +101,15 @@ async function getPath(source: string, params: { [key: string]: string }, settin
         await this.app.vault.createFolder(dir);
     }
 
-	// get all parameters that are a function
-	const functionParams = Object.entries(params)
-	.filter(([key, value]) => key.trim().endsWith('(x)'))
-	.map(([key, val])=> `${key.trim()}=${val.trim()}`);
+    // Obtener solo las funciones (parámetros que terminan en (x) o (x,y))
+    const functionParams = Object.entries(params)
+        .filter(([key, value]) => key.trim().endsWith('(x)') || key.trim().endsWith('(x,y)'))
+        .map(([key, val]) => `${key.trim()}=${val.trim()}`);
 
-    const xmin = (params['xmin'] ?? settings.xmin).toString();
-    const xmax = (params['xmax'] ?? settings.xmax).toString();
-    const numPoints = (params['num_points'] ?? settings.num_points).toString();
-
-    const hashInput = [...functionParams, xmin, xmax, numPoints].join('|');
-    const hash = Buffer.from(hashInput).toString("base64").slice(0,10);
+    // Crear hash solo de las funciones usando crypto para mejor distribución
+    const hashInput = functionParams.join('|');
+    const crypto = require('crypto');
+    const hash = crypto.createHash('sha256').update(hashInput).digest('hex').slice(0, 10);
 
     return `${dir}/plot-${hash}.png`;
 }
@@ -140,12 +143,21 @@ async function generateJuliaPlot(params : {[key:string]:string }, outputPath: st
         const julia = spawn('julia', args);
 
         let stderr = '';
+		let stdout = '';
+		julia.stdout.on('data', (data) => {
+			stdout += data.toString();
+		});
+		
         julia.stderr.on('data', (data) => {
             stderr += data.toString();
         });
 
         julia.on('close', (code) => {
             if (code === 0){
+				if (stdout.trim()){
+					console.log(`JuliaPlots: ${stdout}`);
+					new Notice(`JuliaPlots: ${stdout}`);
+				}
                 resolve();
             }
             else {
@@ -165,6 +177,12 @@ function insertGraph(el: HTMLElement, graphPath: string) {
     const relativePath = path.relative(vaultBase, graphPath).replace(/\\/g, '/');
     const file = this.app.vault.getAbstractFileByPath(relativePath);
 
+	const container = el.createDiv({ cls: 'juliaplots-graph-container' });
+	container.style.display = 'flex';
+	container.style.justifyContent = 'center';
+	container.style.alignItems = 'center';
+	container.style.width = '100%';
+
     let img = document.createElement('img');
     img.alt = 'Julia Plot';
     img.style.maxWidth = '100%';
@@ -175,5 +193,5 @@ function insertGraph(el: HTMLElement, graphPath: string) {
         img.src = relativePath;
     }
 
-    el.appendChild(img);
+    container.appendChild(img);
 }
