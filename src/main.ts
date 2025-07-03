@@ -178,14 +178,9 @@ function insertGraph(el: HTMLElement, graphPath: string) {
     const file = this.app.vault.getAbstractFileByPath(relativePath);
 
 	const container = el.createDiv({ cls: 'juliaplots-graph-container' });
-	container.style.display = 'flex';
-	container.style.justifyContent = 'center';
-	container.style.alignItems = 'center';
-	container.style.width = '100%';
 
     let img = document.createElement('img');
     img.alt = 'Julia Plot';
-    img.style.maxWidth = '100%';
 
     if (file instanceof TFile) {
         img.src = this.app.vault.getResourcePath(file);

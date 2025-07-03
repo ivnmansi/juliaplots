@@ -214,7 +214,7 @@ function main()
                         push!(y, val)
                     end
                 catch e
-                    # Si hay error de dominio (como sqrt negativo), usar NaN
+                    # If an error occurs, push NaN to y
                     push!(y, NaN)
                 end
             end
