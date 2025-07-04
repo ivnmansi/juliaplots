@@ -23,8 +23,8 @@ function parse_args(args)
 function main()
     # Check if enough arguments are provided
     if length(ARGS) < 1
-        println("ERROR: Not enough arguments provided.")
-        return
+        println("Not enough arguments provided.")
+        exit(1)
     end
 
     # Parse the command line arguments
@@ -32,8 +32,8 @@ function main()
     
     # Validate that at least one function is provided
     if !any(endswith(k, "(x)") || endswith(k, "(x,y)") for k in keys(args))
-        println("ERROR: No functions provided. Use f(x)=... or g(x,y)=...")
-        return
+        println("No functions provided. Use f(x)=... or g(x,y)=...")
+        exit(1)
     end
 
     # Find all 2D functions. Any key that ends with '(x)' is considered a 2D function
@@ -70,8 +70,8 @@ function main()
 
     # Verify if there's not 2D and 3D functions at the same time
     if !isempty(f2d_dict) && !isempty(f3d_dict)
-        println("ERROR: Cannot plot both 2D and 3D functions at the same time.")
-        return
+        println("Cannot plot both 2D and 3D functions at the same time.")
+        exit(1)
     end
 
 

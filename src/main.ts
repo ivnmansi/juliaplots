@@ -152,16 +152,19 @@ async function generateJuliaPlot(params : {[key:string]:string }, outputPath: st
             stderr += data.toString();
         });
 
+		julia.on('error', (err) => {
+			if (err) {
+				reject(`Julia could not be initialized. Please make sure that Julia is installed on your system and that it is included on your PATH: ${err.message}`);
+			}
+		});
+
         julia.on('close', (code) => {
             if (code === 0){
-				if (stdout.trim()){
-					console.log(`JuliaPlots: ${stdout}`);
-					new Notice(`JuliaPlots: ${stdout}`);
-				}
-                resolve();
+            	resolve();
             }
             else {
-                reject(stderr || `Julia process exited with code ${code}`);
+				const msg = [stdout.trim(), stderr.trim()].filter(Boolean).join('\n') || `Julia process exited with code ${code}`;
+                reject(msg);
             }
         });
     });

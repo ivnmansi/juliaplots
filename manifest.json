@@ -1,7 +1,7 @@
 {
 	"id": "juliaplots",
 	"name": "JuliaPlots",
-	"version": "0.5.1",
+	"version": "0.5.2",
 	"minAppVersion": "0.15.0",
 	"description": "Plot a function graph inside of your notes using Julia.",
 	"author": "Iván Mansilla",
