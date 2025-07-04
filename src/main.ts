@@ -35,7 +35,7 @@ export default class JuliaPlots extends Plugin {
 
 		// Command (editor callback)
 		this.addCommand({
-			id: 'juliaplots-insert',
+			id: 'insert-graph',
 			name: 'Insert a quick JuliaPlots graph',
 			editorCallback: (editor: Editor, view: MarkdownView) => {
 				new JuliaPlotsModal(this.app,async (params) => {
@@ -122,7 +122,7 @@ async function getPath(source: string, params: { [key: string]: string }, settin
  */
 async function generateJuliaPlot(params : {[key:string]:string }, outputPath: string, settings: JuliaPlotsSettings){
 	// Set path to the Julia plots script
-    const juliaScriptPath = path.join(this.app.vault.adapter.getBasePath(), '.obsidian', 'plugins', 'juliaplots','juliaplots.jl');
+    const juliaScriptPath = path.join(this.app.vault.adapter.getBasePath(), this.app.vault.configDir, 'plugins', 'juliaplots','juliaplots.jl');
 
 	// Join all params (and put default settings if something is missing)
 	const allParams = {

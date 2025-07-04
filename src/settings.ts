@@ -190,7 +190,6 @@ export class JuliaPlotsSettingTab extends PluginSettingTab {
 					await this.plugin.saveSettings();
 				}));
 		
-		const thanksEl = containerEl.createEl('h6');
-        thanksEl.innerHTML = '💗 Thanks for using my plugin! Any suggestion, contribution, or bug report will be very appreciated! <a href="https://github.com/ivnmansi/juliaplots" target="_blank">GitHub Repository</a>';
+		containerEl.createEl('h6',{text: '💗 Thanks for using my plugin! Any suggestion, contribution, or bug report will be very appreciated!'});
 	}
 }
