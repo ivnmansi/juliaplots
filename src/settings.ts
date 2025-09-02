@@ -53,8 +53,8 @@ export class JuliaPlotsSettingTab extends PluginSettingTab {
 
 		containerEl.empty();
 
-		containerEl.createEl('h3', { text: '📐 Default parameters' });
 
+		new Setting(containerEl).setName('📐 Default parameters').setHeading();
 
 		new Setting(containerEl)
 			.setName('Default xmin')
@@ -111,7 +111,7 @@ export class JuliaPlotsSettingTab extends PluginSettingTab {
 					await this.plugin.saveSettings();
 				}));
 
-		containerEl.createEl('h5', { text: '🏈 3D Functions' });
+		new Setting(containerEl).setName('🏈 3D functions').setHeading();
 
 		new Setting(containerEl)
 			.setName('Default ymin')
@@ -146,8 +146,8 @@ export class JuliaPlotsSettingTab extends PluginSettingTab {
 					await this.plugin.saveSettings();
 				}));
 
-		
-	  	containerEl.createEl('h3', { text: '🎨 Graph appearance' });
+
+		new Setting(containerEl).setName('🎨 Graph appearance').setHeading();
 
 		new Setting(containerEl)
 			.setName('Dark mode')
@@ -189,7 +189,7 @@ export class JuliaPlotsSettingTab extends PluginSettingTab {
 					this.plugin.settings.scatter_color = value;
 					await this.plugin.saveSettings();
 				}));
-		
-		containerEl.createEl('h6',{text: '💗 Thanks for using my plugin! Any suggestion, contribution, or bug report will be very appreciated!'});
+
+		new Setting(containerEl).setName('💗 Thanks for using my plugin! Any suggestion, contribution, or bug report will be very appreciated!').setHeading();
 	}
 }

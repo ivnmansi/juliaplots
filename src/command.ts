@@ -11,7 +11,7 @@ export class JuliaPlotsModal extends Modal {
     onOpen(){
         const {contentEl} = this;
         contentEl.empty();
-        contentEl.createEl("h2", {text: "📈 Insert JuliaPlots Quick Graph"});
+        contentEl.createEl("h2", {text: "📈 Insert JuliaPlots quick graph"});
         
         const fields: { [key: string]: HTMLInputElement | HTMLTextAreaElement } = {};
 
@@ -48,7 +48,7 @@ export class JuliaPlotsModal extends Modal {
                 }
         }
 
-        const submitButton = contentEl.createEl("button", {text: "Insert Graph"});
+        const submitButton = contentEl.createEl("button", {text: "Insert graph"});
         submitButton.onclick = () => {
             const values: { [key: string]: string } = {};
             for(const key in fields) {

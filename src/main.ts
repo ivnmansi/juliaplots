@@ -6,11 +6,9 @@ import { TFile } from 'obsidian';
 import { JuliaPlotsSettings, DEFAULT_SETTINGS, JuliaPlotsSettingTab } from './settings';
 import { JuliaPlotsModal } from './command';
 
-/* ---- Plugin logic ---- */
 export default class JuliaPlots extends Plugin {
 	settings: JuliaPlotsSettings;
 
-	/* ---- When the plugin loads ---- */
 	async onload() {
 		await this.loadSettings();
 
@@ -101,12 +99,10 @@ async function getPath(source: string, params: { [key: string]: string }, settin
         await this.app.vault.createFolder(dir);
     }
 
-    // Obtener solo las funciones (parámetros que terminan en (x) o (x,y))
     const functionParams = Object.entries(params)
         .filter(([key, value]) => key.trim().endsWith('(x)') || key.trim().endsWith('(x,y)'))
         .map(([key, val]) => `${key.trim()}=${val.trim()}`);
 
-    // Crear hash solo de las funciones usando crypto para mejor distribución
     const hashInput = functionParams.join('|');
     const crypto = require('crypto');
     const hash = crypto.createHash('sha256').update(hashInput).digest('hex').slice(0, 10);
