@@ -28,6 +28,8 @@
 
 2. Download the plugin from Settings > Community plugins > Browse and enable it
 
+3. Download [juliaplots.jl](https://github.com/ivnmansi/juliaplots/releases) from the latest release and put the file in `.obsidian/plugins/juliaplots/` on your vault
+
 
 ## ⚡ Usage
 
