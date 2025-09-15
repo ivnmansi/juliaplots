@@ -80,7 +80,7 @@
 
 ## ❗ Known issues
 - 🕒 **Long waiting time:** The plugin can take a long time to generate the graph depending on the user. If you have this problem, it is recommended to use a lower number of plot points.
-- 📁 `juliaplots.jl: No such file or directory`: This means that the `juliaplots.jl` file wasn't downloaded and/or isn't in the right directory. Be sure of following the installation steps!
+- 📁 **'juliaplots.jl: No such file or directory'**: This means that the `juliaplots.jl` file wasn't downloaded and/or isn't in the right directory. Be sure of following the installation steps!
 
 
 ## 🤝 Contributing
