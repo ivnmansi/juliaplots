@@ -35,8 +35,8 @@
 
 | Parameter      | Description                                                           |
 |----------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
-| `<name_of_function>(x)=<math_equation>, <color>`| **Function to plot** in terms of `x`. It can have any name, as long as it ends with `(x)`. Color can be omitted. You can add as many as you want. |
-| `<name_of_function>(x,y)=<math_equation>, <color>`| **3D Function to plot** in terms of `x` and `y`. It can have any name, as long as it ends with `(x,y)`. Color can be omitted. You can add as many as you want. |
+| `<name_of_function>(x)=<math_equation>, <color>, <label>`| **Function to plot** in terms of `x`. It can have any name, as long as it ends with `(x)`. Color and label can be omitted. You can add as many as you want. |
+| `<name_of_function>(x,y)=<math_equation>, <color>, <label>`| **3D Function to plot** in terms of `x` and `y`. It can have any name, as long as it ends with `(x,y)`. Color can be omitted. You can add as many as you want. |
 | `scatter=<x>,<y>,<color>,<label> ; <x2>,<y2>...`| **Points to render on the graph**. Multiple points must be separated with a `;`. Color and label can be omitted, but if not, they have to be in the **specified order** |
 | `xmin=<number>`| **Start of the range** on the x-axis that will be plotted |
 | `xmax=<number>`| **End of the range** on the x-axis that will be plotted |
