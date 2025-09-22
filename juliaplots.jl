@@ -189,7 +189,7 @@ function main()
 
             # Draw the surface plot and add parameters
             surface!(plt, collect(x), collect(y), z,
-                label="woops",
+                label=label_dict[name],
                 color=color_dict[name],
                 linewidth=0,
                 fillalpha=0.8,
@@ -249,7 +249,7 @@ function main()
             if length(coords) >= 2
                 xp = parse(Float64, coords[1])
                 yp = parse(Float64, coords[2])
-                color = (length(coords) > 2) ? coords[3] : scatter_color
+                color = (length(coords) > 2) && !isempty(coords[3]) ? coords[3] : scatter_color
                 label = (length(coords) > 3) ? coords[4] : "($xp, $yp)"
                 scatter!(plt, [xp], [yp], label=label, color=color)
             else
