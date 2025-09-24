@@ -29,7 +29,7 @@ function main()
 
     # Parse the command line arguments
     args = parse_args(ARGS)
-    
+
     # Validate that at least one function is provided
     if !any(endswith(k, "(x)") || endswith(k, "(x,y)") for k in keys(args))
         println("No functions provided. Use f(x)=... or g(x,y)=...")
@@ -40,30 +40,43 @@ function main()
     # Also extract the color for each function if provided
     f2d_dict = Dict{String, Function}()
     color_dict = Dict{String, String}()
+    label_dict = Dict{String, String}()
     for(k,v) in args
         if endswith(k,"(x)")
             parts = split(v, ",")
             equation = strip(parts[1])
             f2d_dict[k] = eval(Meta.parse("x -> $equation"))
+            color_dict[k] = get(args, "color", "blue")
             if length(parts) > 1
-                color_dict[k] = strip(parts[2])
-            else
-                color_dict[k] = get(args, "color", "blue")
+                color_value = strip(parts[2])
+                color_dict[k] = isempty(color_value) ? color_dict[k] : color_value
+            end
+
+            label_dict[k] = split(v, ",")[1]
+            if length(parts) > 2
+                label_value = strip(parts[3])
+                label_dict[k] = isempty(label_value) ? label_dict[k] : label_value
             end
         end
     end
 
     # Find all 3D functions. Any key that ends with '(x,y)' is considered a 3D function
     f3d_dict = Dict{String, Function}()
-    for(k,v) in args 
+    for(k,v) in args
         if endswith(k,"(x,y)")
             parts = split(v,",")
             equation = strip(parts[1])
             f3d_dict[k] = eval(Meta.parse("function(x,y) $equation end"))
+            color_dict[k] = get(args, "color", "blue")
             if length(parts) > 1
-                color_dict[k] = strip(parts[2])
-            else
-                color_dict[k] = get(args, "color", "blue")
+                color_value = strip(parts[2])
+                color_dict[k] = isempty(color_value) ? color_dict[k] : color_value
+            end
+
+            label_dict[k] = split(v, ",")[1]
+            if length(parts) > 2
+                label_value = strip(parts[3])
+                label_dict[k] = isempty(label_value) ? label_dict[k] : label_value
             end
         end
     end
@@ -176,7 +189,7 @@ function main()
 
             # Draw the surface plot and add parameters
             surface!(plt, collect(x), collect(y), z,
-                label=split(args[name],",")[1],
+                label=label_dict[name],
                 color=color_dict[name],
                 linewidth=0,
                 fillalpha=0.8,
@@ -221,7 +234,7 @@ function main()
             # Draw
             plot!(plt,
                 x, y,
-                label=split(args[name],",")[1],
+                label=label_dict[name],
                 color=color_dict[name],
                 linewidth=line_width
             )
@@ -236,7 +249,7 @@ function main()
             if length(coords) >= 2
                 xp = parse(Float64, coords[1])
                 yp = parse(Float64, coords[2])
-                color = (length(coords) > 2) ? coords[3] : scatter_color
+                color = (length(coords) > 2) && !isempty(coords[3]) ? coords[3] : scatter_color
                 label = (length(coords) > 3) ? coords[4] : "($xp, $yp)"
                 scatter!(plt, [xp], [yp], label=label, color=color)
             else
