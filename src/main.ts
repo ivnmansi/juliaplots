@@ -1,4 +1,4 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { Editor, MarkdownView, Plugin } from 'obsidian';
 import { spawn } from 'child_process';
 import * as path from 'path';
 import { TFile } from 'obsidian';
@@ -136,7 +136,8 @@ async function generateJuliaPlot(params : {[key:string]:string }, outputPath: st
 
 	// Spawn the Julia script with the arguments
     return  new Promise<void>((resolve, reject) => {
-        const julia = spawn('julia', args);
+		const juliaExecutable = settings.julia_path || 'julia';
+        const julia = spawn(juliaExecutable, args);
 
         let stderr = '';
 		let stdout = '';

@@ -17,6 +17,8 @@ export interface JuliaPlotsSettings {
 	color: string;
 	line_width: number;
     scatter_color: string;
+
+	julia_path?: string;
 }
 
 /* ---- Default settings ---- */
@@ -35,6 +37,8 @@ export const DEFAULT_SETTINGS: JuliaPlotsSettings = {
 	color: '#1E90FF',
 	line_width: 2,
     scatter_color: '#1E90FF',
+
+	julia_path: undefined,
 }
 
 /**
@@ -53,6 +57,17 @@ export class JuliaPlotsSettingTab extends PluginSettingTab {
 
 		containerEl.empty();
 
+		new Setting(containerEl).setName('⚙️ Plugin settings').setHeading();
+		new Setting(containerEl)
+			.setName('Julia executable path')
+			.setDesc('Path to the Julia executable. If not set, the plugin will try to use the system default Julia installation.')
+			.addText(text => text
+				.setPlaceholder('Example: /usr/local/bin/julia')
+				.setValue(this.plugin.settings.julia_path ?? '')
+				.onChange(async (value) => {
+					this.plugin.settings.julia_path = value || undefined;
+					await this.plugin.saveSettings();
+				}));
 
 		new Setting(containerEl).setName('📐 Default parameters').setHeading();
 
