@@ -1,5 +1,5 @@
-import { App, PluginSettingTab, Setting } from 'obsidian';
-import JuliaPlots from './main';
+import { App, PluginSettingTab, Setting } from "obsidian";
+import JuliaPlots from "./main";
 
 /* ---- Plugin settings ---- */
 export interface JuliaPlotsSettings {
@@ -16,7 +16,7 @@ export interface JuliaPlotsSettings {
 	dark_mode: boolean;
 	color: string;
 	line_width: number;
-    scatter_color: string;
+	scatter_color: string;
 
 	julia_path?: string;
 }
@@ -26,20 +26,20 @@ export const DEFAULT_SETTINGS: JuliaPlotsSettings = {
 	xmin: -10,
 	xmax: 10,
 	num_points: 100,
-	x_label: 'x',
- 	y_label: 'y',
+	x_label: "x",
+	y_label: "y",
 
 	ymin: -10,
 	ymax: 10,
-	z_label: 'z',
+	z_label: "z",
 
 	dark_mode: false,
-	color: '#1E90FF',
+	color: "#1E90FF",
 	line_width: 2,
-    scatter_color: '#1E90FF',
+	scatter_color: "#1E90FF",
 
 	julia_path: undefined,
-}
+};
 
 /**
  * Settings tab
@@ -53,158 +53,193 @@ export class JuliaPlotsSettingTab extends PluginSettingTab {
 	}
 
 	display(): void {
-		const {containerEl} = this;
+		const { containerEl } = this;
 
 		containerEl.empty();
 
-		new Setting(containerEl).setName('⚙️ Plugin settings').setHeading();
+		new Setting(containerEl).setName("⚙️ General").setHeading();
 		new Setting(containerEl)
-			.setName('Julia executable path')
-			.setDesc('Path to the Julia executable. If not set, the plugin will try to use the system default Julia installation.')
-			.addText(text => text
-				.setPlaceholder('Example: /usr/local/bin/julia')
-				.setValue(this.plugin.settings.julia_path ?? '')
-				.onChange(async (value) => {
-					this.plugin.settings.julia_path = value || undefined;
-					await this.plugin.saveSettings();
-				}));
+			.setName("Julia executable path")
+			.setDesc(
+				"Path to the Julia executable. If not set, the plugin will try to use the system default Julia installation.",
+			)
+			.addText((text) =>
+				text
+					.setPlaceholder("Example: /usr/local/bin/julia")
+					.setValue(this.plugin.settings.julia_path ?? "")
+					.onChange(async (value) => {
+						this.plugin.settings.julia_path = value || undefined;
+						await this.plugin.saveSettings();
+					}),
+			);
 
-		new Setting(containerEl).setName('📐 Default parameters').setHeading();
-
-		new Setting(containerEl)
-			.setName('Default xmin')
-			.setDesc('Default minimum x value for the plot')
-			.addText(text => text
-				.setPlaceholder('Example: -10')
-				.setValue(this.plugin.settings.xmin.toString())
-				.onChange(async (value) => {
-					this.plugin.settings.xmin = parseFloat(value);
-					await this.plugin.saveSettings();
-				}));
+		new Setting(containerEl).setName("📐 Default parameters").setHeading();
 
 		new Setting(containerEl)
-			.setName('Default xmax')
-			.setDesc('Default maximum x value for the plot')
-			.addText(text => text
-				.setPlaceholder('Example: 10')
-				.setValue(this.plugin.settings.xmax.toString())
-				.onChange(async (value) => {
-					this.plugin.settings.xmax = parseFloat(value);
-					await this.plugin.saveSettings();
-				}));
-		
-		new Setting(containerEl)
-			.setName('Default number of points')
-			.setDesc('Default number of points to plot on the graph (⚠️ Notice that a higher number of points will result in a smoother graph, but maybe will take longer to generate)')
-			.addText(text => text
-				.setPlaceholder('Example: 100')
-				.setValue(this.plugin.settings.num_points.toString())
-				.onChange(async (value) => {
-					this.plugin.settings.num_points = parseFloat(value);
-					await this.plugin.saveSettings();
-				}));
+			.setName("Default xmin")
+			.setDesc("Default minimum x value for the plot")
+			.addText((text) =>
+				text
+					.setPlaceholder("Example: -10")
+					.setValue(this.plugin.settings.xmin.toString())
+					.onChange(async (value) => {
+						this.plugin.settings.xmin = parseFloat(value);
+						await this.plugin.saveSettings();
+					}),
+			);
 
 		new Setting(containerEl)
-			.setName('Default x label')
-			.setDesc('Default label for the x-axis of the graph')
-			.addText(text => text
-				.setPlaceholder('Example: Time (s)')
-				.setValue(this.plugin.settings.x_label.toString())
-				.onChange(async (value) => {
-					this.plugin.settings.x_label = value;
-					await this.plugin.saveSettings();
-				}));
+			.setName("Default xmax")
+			.setDesc("Default maximum x value for the plot")
+			.addText((text) =>
+				text
+					.setPlaceholder("Example: 10")
+					.setValue(this.plugin.settings.xmax.toString())
+					.onChange(async (value) => {
+						this.plugin.settings.xmax = parseFloat(value);
+						await this.plugin.saveSettings();
+					}),
+			);
 
 		new Setting(containerEl)
-			.setName('Default y label')
-			.setDesc('Default label for the y-axis of the graph')
-			.addText(text => text
-				.setPlaceholder('Example:  Velocity (m/s)')
-				.setValue(this.plugin.settings.y_label.toString())
-				.onChange(async (value) => {
-					this.plugin.settings.y_label = value;
-					await this.plugin.saveSettings();
-				}));
-
-		new Setting(containerEl).setName('🏈 3D functions').setHeading();
-
-		new Setting(containerEl)
-			.setName('Default ymin')
-			.setDesc('Default minimum y value for the 3D plot')
-			.addText(text => text
-				.setPlaceholder('Example:  -10')
-				.setValue(this.plugin.settings.ymin.toString())
-				.onChange(async (value) => {
-					this.plugin.settings.ymin = parseFloat(value);
-					await this.plugin.saveSettings();
-				}));
+			.setName("Default number of points")
+			.setDesc(
+				"Default number of points to plot on the graph (⚠️ Notice that a higher number of points will result in a smoother graph, but maybe will take longer to generate)",
+			)
+			.addText((text) =>
+				text
+					.setPlaceholder("Example: 100")
+					.setValue(this.plugin.settings.num_points.toString())
+					.onChange(async (value) => {
+						this.plugin.settings.num_points = parseFloat(value);
+						await this.plugin.saveSettings();
+					}),
+			);
 
 		new Setting(containerEl)
-			.setName('Default ymax')
-			.setDesc('Default maximum y value for the 3D plot')
-			.addText(text => text
-				.setPlaceholder('Example:  10')
-				.setValue(this.plugin.settings.ymax.toString())
-				.onChange(async (value) => {
-					this.plugin.settings.ymax = parseFloat(value);
-					await this.plugin.saveSettings();
-				}));
+			.setName("Default x label")
+			.setDesc("Default label for the x-axis of the graph")
+			.addText((text) =>
+				text
+					.setPlaceholder("Example: Time (s)")
+					.setValue(this.plugin.settings.x_label.toString())
+					.onChange(async (value) => {
+						this.plugin.settings.x_label = value;
+						await this.plugin.saveSettings();
+					}),
+			);
 
 		new Setting(containerEl)
-			.setName('Default z label')
-			.setDesc('Default label for the z-axis of the 3D graph')
-			.addText(text => text
-				.setPlaceholder('Example:  Height (m)')
-				.setValue(this.plugin.settings.z_label.toString())
-				.onChange(async (value) => {
-					this.plugin.settings.z_label = value;
-					await this.plugin.saveSettings();
-				}));
+			.setName("Default y label")
+			.setDesc("Default label for the y-axis of the graph")
+			.addText((text) =>
+				text
+					.setPlaceholder("Example:  Velocity (m/s)")
+					.setValue(this.plugin.settings.y_label.toString())
+					.onChange(async (value) => {
+						this.plugin.settings.y_label = value;
+						await this.plugin.saveSettings();
+					}),
+			);
 
-
-		new Setting(containerEl).setName('🎨 Graph appearance').setHeading();
-
-		new Setting(containerEl)
-			.setName('Dark mode')
-			.setDesc('If enabled, the graph will generate with a transparent background and white text and lines')
-			.addToggle(toggle => toggle
-				.setValue(this.plugin.settings.dark_mode)
-				.onChange(async (value) => {
-					this.plugin.settings.dark_mode = value;
-					await this.plugin.saveSettings();
-				}));
+		new Setting(containerEl).setName("🏈 3D functions").setHeading();
 
 		new Setting(containerEl)
-			.setName('Graph color')
-			.setDesc('Default color for the graph line')
-			.addColorPicker(color => color
-				.setValue(this.plugin.settings.color)
-				.onChange(async (value) => {
-					this.plugin.settings.color = value;
-					await this.plugin.saveSettings();
-				}));
-		
-		new Setting(containerEl)
-			.setName('Line width')
-			.setDesc('Default width of the graph line')
-			.addText(text => text
-				.setPlaceholder('Example: 2')
-				.setValue(this.plugin.settings.line_width.toString())
-				.onChange(async (value) => {
-					this.plugin.settings.line_width = parseFloat(value);
-					await this.plugin.saveSettings();
-				}));
-        
-        new Setting(containerEl)
-			.setName('Scatter color')
-			.setDesc('Default color for the scatter points')
-			.addColorPicker(color => color
-				.setValue(this.plugin.settings.scatter_color)
-				.onChange(async (value) => {
-					this.plugin.settings.scatter_color = value;
-					await this.plugin.saveSettings();
-				}));
+			.setName("Default ymin")
+			.setDesc("Default minimum y value for the 3D plot")
+			.addText((text) =>
+				text
+					.setPlaceholder("Example:  -10")
+					.setValue(this.plugin.settings.ymin.toString())
+					.onChange(async (value) => {
+						this.plugin.settings.ymin = parseFloat(value);
+						await this.plugin.saveSettings();
+					}),
+			);
 
-		new Setting(containerEl).setName('💗 Thanks for using my plugin! Any suggestion, contribution, or bug report will be very appreciated!').setHeading();
+		new Setting(containerEl)
+			.setName("Default ymax")
+			.setDesc("Default maximum y value for the 3D plot")
+			.addText((text) =>
+				text
+					.setPlaceholder("Example:  10")
+					.setValue(this.plugin.settings.ymax.toString())
+					.onChange(async (value) => {
+						this.plugin.settings.ymax = parseFloat(value);
+						await this.plugin.saveSettings();
+					}),
+			);
+
+		new Setting(containerEl)
+			.setName("Default z label")
+			.setDesc("Default label for the z-axis of the 3D graph")
+			.addText((text) =>
+				text
+					.setPlaceholder("Example:  Height (m)")
+					.setValue(this.plugin.settings.z_label.toString())
+					.onChange(async (value) => {
+						this.plugin.settings.z_label = value;
+						await this.plugin.saveSettings();
+					}),
+			);
+
+		new Setting(containerEl).setName("🎨 Graph appearance").setHeading();
+
+		new Setting(containerEl)
+			.setName("Dark mode")
+			.setDesc(
+				"If enabled, the graph will generate with a transparent background and white text and lines",
+			)
+			.addToggle((toggle) =>
+				toggle
+					.setValue(this.plugin.settings.dark_mode)
+					.onChange(async (value) => {
+						this.plugin.settings.dark_mode = value;
+						await this.plugin.saveSettings();
+					}),
+			);
+
+		new Setting(containerEl)
+			.setName("Graph color")
+			.setDesc("Default color for the graph line")
+			.addColorPicker((color) =>
+				color
+					.setValue(this.plugin.settings.color)
+					.onChange(async (value) => {
+						this.plugin.settings.color = value;
+						await this.plugin.saveSettings();
+					}),
+			);
+
+		new Setting(containerEl)
+			.setName("Line width")
+			.setDesc("Default width of the graph line")
+			.addText((text) =>
+				text
+					.setPlaceholder("Example: 2")
+					.setValue(this.plugin.settings.line_width.toString())
+					.onChange(async (value) => {
+						this.plugin.settings.line_width = parseFloat(value);
+						await this.plugin.saveSettings();
+					}),
+			);
+
+		new Setting(containerEl)
+			.setName("Scatter color")
+			.setDesc("Default color for the scatter points")
+			.addColorPicker((color) =>
+				color
+					.setValue(this.plugin.settings.scatter_color)
+					.onChange(async (value) => {
+						this.plugin.settings.scatter_color = value;
+						await this.plugin.saveSettings();
+					}),
+			);
+
+		new Setting(containerEl)
+			.setName(
+				"💗 Thanks for using my plugin! Any suggestion, contribution, or bug report will be very appreciated!",
+			)
+			.setHeading();
 	}
 }
