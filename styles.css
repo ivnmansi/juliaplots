@@ -1,0 +1,42 @@
+.juliaplots-loading {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--size-4-2, 8px);
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	padding: var(--size-4-1, 4px) 0;
+}
+
+.juliaplots-loading-spinner {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--interactive-accent);
+	--icon-size: var(--icon-s, 16px);
+}
+
+.juliaplots-loading-spinner svg {
+	animation: spin 1s linear infinite;
+	width: var(--icon-size, 16px);
+	height: var(--icon-size, 16px);
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.juliaplots-graph-container {
+	display: flex;
+	justify-content: center;
+	margin: var(--size-4-2, 8px) 0;
+}
+
+.juliaplots-graph-container img {
+	max-width: 100%;
+	height: auto;
+}

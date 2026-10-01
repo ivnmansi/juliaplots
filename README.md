@@ -28,9 +28,6 @@
 
 2. Download the plugin from Settings > Community plugins > Browse and enable it
 
-3. Download [juliaplots.jl](https://github.com/ivnmansi/juliaplots/releases) from the latest release and put the file in `.obsidian/plugins/juliaplots/` on your vault
-
-
 ## ⚡ Usage
 
 | Parameter      | Description                                                           |
@@ -51,6 +48,7 @@
 | `scatter_color=<color>`| **Color** that the **points** on the graph will use if not specified |
 | `line_width=<number>`| Width of the function lines |
 | `dark_mode=<true/false>` | Renders the graph with a suitable view for vaults with dark themes |
+| `folder=<path>`| **Folder** in the vault where the generated plot image will be saved |
 
 > ☑️ If any of these parameters is omitted, the configured default value will be used! You can change them in the plugin's settings tab
 
@@ -80,7 +78,6 @@
 
 ## ❗ Known issues
 - 🕒 **Long waiting time:** The plugin can take a long time to generate the graph depending on the user. If you have this problem, it is recommended to use a lower number of plot points.
-- 📁 **'juliaplots.jl: No such file or directory'**: This means that the `juliaplots.jl` file wasn't downloaded and/or isn't in the right directory. Be sure of following the installation steps!
 - 🧩 **'Please make sure that Julia is installed on your system and that it is included on your PATH'**: If you already have Julia installed and on your PATH, but it still doesn't work, you can fix this by specifying the full path to the Julia executable in the plugin settings.
 
 

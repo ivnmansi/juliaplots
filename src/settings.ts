@@ -19,6 +19,7 @@ export interface JuliaPlotsSettings {
 	scatter_color: string;
 
 	julia_path?: string;
+	plot_folder: string;
 }
 
 /* ---- Default settings ---- */
@@ -39,6 +40,7 @@ export const DEFAULT_SETTINGS: JuliaPlotsSettings = {
 	scatter_color: "#1E90FF",
 
 	julia_path: undefined,
+	plot_folder: "juliaplots",
 };
 
 /**
@@ -58,6 +60,22 @@ export class JuliaPlotsSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		new Setting(containerEl).setName("⚙️ General").setHeading();
+		new Setting(containerEl)
+			.setName("Plots folder")
+			.setDesc(
+				"Folder in your vault where generated plot images will be saved.",
+			)
+			.addText((text) =>
+				text
+					.setPlaceholder("Example: juliaplots")
+					.setValue(this.plugin.settings.plot_folder)
+					.onChange(async (value) => {
+						this.plugin.settings.plot_folder =
+							value.trim() || DEFAULT_SETTINGS.plot_folder;
+						await this.plugin.saveSettings();
+					}),
+			);
+
 		new Setting(containerEl)
 			.setName("Julia executable path")
 			.setDesc(

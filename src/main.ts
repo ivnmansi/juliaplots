@@ -1,7 +1,7 @@
 import { Editor, Plugin } from "obsidian";
 
 import { JuliaPlotsModal } from "./command";
-import { renderJuliaPlotBlock } from "./plot";
+import { ensureJuliaScriptExists, renderJuliaPlotBlock } from "./plot";
 import {
 	DEFAULT_SETTINGS,
 	JuliaPlotsSettings,
@@ -13,6 +13,7 @@ export default class JuliaPlots extends Plugin {
 
 	async onload() {
 		await this.loadSettings();
+		await ensureJuliaScriptExists(this.app);
 
 		/**
 		 * JuliaPlots code block processor
